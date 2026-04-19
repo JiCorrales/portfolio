@@ -89,7 +89,8 @@ function App() {
   }, [state]);
 
   uE(() => {
-    if (!state.cursor) {
+    const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+    if (!state.cursor || isTouch) {
       document.body.classList.remove('cursor-on');
       return;
     }
