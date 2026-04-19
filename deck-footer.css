@@ -248,8 +248,12 @@
 .mani-content {
   padding-left: 24px;
   padding-top: 6px;
-  white-space: pre-wrap;
+  white-space: pre;
+  min-width: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
+.mani-content > div { line-height: 1.7em; }
 
 /* syntax colors */
 .mani-content .kw { color: oklch(0.72 0.18 300); }  /* const, function, return */
