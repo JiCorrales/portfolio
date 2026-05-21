@@ -69,7 +69,21 @@ function Marquee() {
 // ================ WORK ==================
 const PROJECTS = [
   { num: '01', name: 'Learning Commons TEC', tag: 'Sistema · Asistencia', year: '2025', tech: ['Angular 21', 'Express', 'PostgreSQL', 'TypeScript'], desc: 'Sistema de gestión operativa para el Learning Commons y Biblioteca BJFF del TEC. Controla logs de asistencia en 7 modalidades, reservas de cubículos, horas trabajadas y RBAC para administradores y asistentes en dos sedes.' },
-  { num: '02', name: 'Examen Práctica PAA TEC', tag: 'Plataforma · Educación', year: '2026', tech: ['React 19', 'TypeScript', 'Vite', 'Vitest'], desc: 'Aplicación web para practicar el examen de admisión del TEC. Arquitectura feature-first con flujo completo de login, consentimiento, examen cronometrado y revisión de resultados, con soporte mobile y cobertura de pruebas automatizadas.' },
+  {
+    num: '02',
+    name: 'Examen Práctica PAA TEC',
+    tag: 'Plataforma · Educación',
+    year: '2026',
+    tech: ['React 19', 'TypeScript', 'Vite', 'Vitest'],
+    desc: 'Aplicación web para practicar el examen de admisión del TEC. Arquitectura feature-first con flujo completo de login, consentimiento, examen cronometrado y revisión de resultados, con soporte mobile y cobertura de pruebas automatizadas.',
+    press: [
+      { outlet: 'La Nación', date: '2026-05-21', url: 'https://www.nacion.com/el-pais/tec-habilita-nueva-practica-interactiva-en-linea/7NJGWOILV5DALGOUJP2RDA3HQE/story/' },
+      { outlet: 'Velero Informativo', date: '2026-05-21', url: 'https://velero.cr/2026/05/nueva-practica-en-linea-permitira-prepararse-mejor-para-el-examen-de-admision-al-tec/' },
+      { outlet: 'Periódico Mensaje', date: '2026-05-21', url: 'https://www.periodicomensaje.com/educacion/14854-nueva-practica-en-linea-permitira-prepararse-mejor-para-el-examen-de-admision-al-tec-nueva-practica-en-linea-permitira-prepararse-mejor-para-el-examen-de-admision-al-tec' },
+      { outlet: 'Telenoticias', date: '2026-05-20', medium: 'TV' },
+      { outlet: 'Telenoticias Radio', date: '2026-05-20' },
+    ],
+  },
   { num: '03', name: 'BJFF Book Locator', tag: 'Sistema · Biblioteca', year: '2026', tech: ['Astro', 'React 19', 'TypeScript', 'Express', 'Prisma', 'PostgreSQL'], desc: 'Sistema de localización de libros para la Biblioteca José Figueres Ferrer del TEC. Parser de clasificación normalizada, motor de búsqueda por rangos en estanterías y módulo admin para mapear la estructura física de la biblioteca sobre la base de datos.' },
   { num: '04', name: 'Creador de Horario TEC', tag: 'SPA · Chrome Extension', year: '2025', tech: ['React 18', 'TypeScript', 'Vite', 'Tailwind', 'jsPDF', 'Chrome Extension MV3'], link: 'https://creadordehorario.vercel.app/', imgs: ['screenshots/creador-de-horario.png', 'screenshots/creador-de-horario-2.png'], desc: 'SPA para armar el horario universitario del TEC de forma visual, con exportación a PDF y Excel. Acompañada de una extensión de Chrome que extrae los cursos directamente del sistema de matrícula institucional y los importa en un clic.' },
 ];
@@ -89,7 +103,14 @@ function Work() {
             <div key={p.num} className={`work-item ${open === p.num ? 'open' : ''}`} onClick={() => setOpen(open === p.num ? null : p.num)} data-hover>
               <div className="num">{p.num}</div>
               <h3>{p.name}</h3>
-              <div className="tag">{p.tag}</div>
+              <div className="tag-group">
+                <div className="tag">{p.tag}</div>
+                {p.press && p.press.length > 0 && (
+                  <div className="press-badge" title={`Cobertura en ${p.press.length} medios`}>
+                    <span className="press-badge-dot"></span>EN MEDIOS
+                  </div>
+                )}
+              </div>
               <div className="year">{p.year}</div>
               <div className="arrow">
                 <svg width="14" height="14" viewBox="0 0 14 14"><path d="M3 11 L11 3 M11 3 H5 M11 3 V9" stroke="currentColor" strokeWidth="1.5" fill="none"/></svg>
@@ -123,6 +144,35 @@ function Work() {
                     <div className="stack">
                       {p.tech.map(t => <span key={t} className="chip">{t}</span>)}
                     </div>
+                    {p.press && p.press.length > 0 && (
+                      <div className="press">
+                        <div className="press-label">/ En medios</div>
+                        <ul className="press-list">
+                          {p.press.map((m, i) => (
+                            <li key={i}>
+                              {m.url ? (
+                                <a
+                                  href={m.url}
+                                  target="_blank"
+                                  rel="noopener"
+                                  onClick={e => e.stopPropagation()}
+                                  data-hover
+                                >
+                                  <span className="press-outlet">{m.outlet}{m.medium ? ` · ${m.medium}` : ''}</span>
+                                  <span className="press-date">{m.date}</span>
+                                  <span className="press-arrow">→</span>
+                                </a>
+                              ) : (
+                                <span className="press-static">
+                                  <span className="press-outlet">{m.outlet}{m.medium ? ` · ${m.medium}` : ''}</span>
+                                  <span className="press-date">{m.date}</span>
+                                </span>
+                              )}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                     {p.link && (
                       <a
                         className="work-link"
@@ -249,7 +299,6 @@ function Now() {
     { when: '/NEXT', what: 'organizador-web + bot de Telegram sobre Postgres compartido', p: 40 },
     { when: '/SOON', what: 'Integración creadordehorario ↔ organizador-web vía envelope JSON', p: 15 },
     { when: '/SOON', what: 'Tienda BARCA Agroforestal — e-commerce para productos forestales', p: 5 },
-    { when: '/IDLE', what: 'Puliendo Examen Práctica PAA TEC para release', p: 80 },
   ];
   const stack = ['TypeScript', 'React', 'Next.js', 'Node.js', 'Postgres', 'Docker', 'AWS', 'Tailwind', 'Prisma', 'tRPC'];
   return (
