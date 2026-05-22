@@ -71,10 +71,12 @@ const PROJECTS = [
   { num: '01', name: 'Learning Commons TEC', tag: 'Sistema · Asistencia', year: '2025', tech: ['Angular 21', 'Express', 'PostgreSQL', 'TypeScript'], desc: 'Sistema de gestión operativa para el Learning Commons y Biblioteca BJFF del TEC. Controla logs de asistencia en 7 modalidades, reservas de cubículos, horas trabajadas y RBAC para administradores y asistentes en dos sedes.' },
   {
     num: '02',
+    slug: 'paa-tec',
     name: 'Examen Práctica PAA TEC',
     tag: 'Plataforma · Educación',
     year: '2026',
     tech: ['React 19', 'TypeScript', 'Vite', 'Vitest'],
+    cover: 'screenshots/paa-tec/04-welcome.png',
     desc: 'Aplicación web para practicar el examen de admisión del TEC. Arquitectura feature-first con flujo completo de login, consentimiento, examen cronometrado y revisión de resultados, con soporte mobile y cobertura de pruebas automatizadas.',
     press: [
       { outlet: 'La Nación', date: '2026-05-21', url: 'https://www.nacion.com/el-pais/tec-habilita-nueva-practica-interactiva-en-linea/7NJGWOILV5DALGOUJP2RDA3HQE/story/' },
@@ -82,6 +84,18 @@ const PROJECTS = [
       { outlet: 'Periódico Mensaje', date: '2026-05-21', url: 'https://www.periodicomensaje.com/educacion/14854-nueva-practica-en-linea-permitira-prepararse-mejor-para-el-examen-de-admision-al-tec-nueva-practica-en-linea-permitira-prepararse-mejor-para-el-examen-de-admision-al-tec' },
       { outlet: 'Telenoticias', date: '2026-05-20', medium: 'TV' },
       { outlet: 'Telenoticias Radio', date: '2026-05-20' },
+    ],
+    gallery: [
+      { src: 'screenshots/paa-tec/01-login.png',            step: '01',  label: 'Login',               sub: 'Auth con cédula y código' },
+      { src: 'screenshots/paa-tec/02-consent.png',          step: '02',  label: 'Consentimiento',      sub: 'Consentimiento informado' },
+      { src: 'screenshots/paa-tec/03-consent-rejected.png', step: '03',  label: 'Consent rechazado',   sub: 'Edge case · usuario rechaza' },
+      { src: 'screenshots/paa-tec/04-welcome.png',          step: '04',  label: 'Bienvenida',          sub: 'Onboarding' },
+      { src: 'screenshots/paa-tec/05-instructions.png',     step: '05',  label: 'Instrucciones',       sub: 'Reglas del examen' },
+      { src: 'screenshots/paa-tec/06-exam.png',             step: '06',  label: 'Examen',              sub: 'Pregunta sin contestar' },
+      { src: 'screenshots/paa-tec/06b-exam-answered.png',   step: '06b', label: 'Pregunta contestada', sub: 'Selección guardada' },
+      { src: 'screenshots/paa-tec/06c-finalize-dialog.png', step: '06c', label: 'Finalizar',           sub: 'Dialog de confirmación' },
+      { src: 'screenshots/paa-tec/07-results.png',          step: '07',  label: 'Resultados',          sub: 'Score por área (Mat/Verbal)' },
+      { src: 'screenshots/paa-tec/08-review.png',           step: '08',  label: 'Revisión',            sub: 'Review pregunta por pregunta' },
     ],
   },
   { num: '03', name: 'BJFF Book Locator', tag: 'Sistema · Biblioteca', year: '2026', tech: ['Astro', 'React 19', 'TypeScript', 'Express', 'Prisma', 'PostgreSQL'], desc: 'Sistema de localización de libros para la Biblioteca José Figueres Ferrer del TEC. Parser de clasificación normalizada, motor de búsqueda por rangos en estanterías y módulo admin para mapear la estructura física de la biblioteca sobre la base de datos.' },
@@ -98,9 +112,19 @@ function Work() {
         <div className="work-list">
           {PROJECTS.map(p => {
             const imgs = p.imgs || (p.img ? [p.img] : []);
-            const cover = imgs[0];
+            const cover = p.cover || imgs[0] || (p.gallery && p.gallery[0]?.src);
+            const hasMedia = (p.gallery && p.gallery.length > 0) || imgs.length > 0;
+            const hasPage = !!p.slug;
+            const itemClass = `work-item ${open === p.num ? 'open' : ''} ${hasPage ? 'work-item--has-page' : ''}`;
+            const handleClick = () => {
+              if (hasPage) {
+                window.location.hash = `#/proyectos/${p.slug}`;
+              } else {
+                setOpen(open === p.num ? null : p.num);
+              }
+            };
             return (
-            <div key={p.num} className={`work-item ${open === p.num ? 'open' : ''}`} onClick={() => setOpen(open === p.num ? null : p.num)} data-hover>
+            <div key={p.num} className={itemClass} onClick={handleClick} data-hover>
               <div className="num">{p.num}</div>
               <h3>{p.name}</h3>
               <div className="tag-group">
@@ -120,25 +144,49 @@ function Work() {
                   ? <img src={cover} alt={p.name} className="work-shot-img" />
                   : <div className="work-shot-nda work-shot-nda--sm"><span>CONFIDENTIAL</span></div>}
               </div>
-              <div className="work-expand">
-                <div className="work-expand-inner">
+              {!hasPage && <div className="work-expand">
+                <div className={`work-expand-inner ${!hasMedia ? 'work-expand-inner--no-media' : ''}`}>
                   <div className="spacer"></div>
-                  <div className="work-gallery">
-                    {imgs.length > 0 ? (
-                      imgs.map((src, i) => (
-                        <div key={i} className="work-shot" data-label="">
-                          <img src={src} alt={`${p.name} ${i + 1}`} className="work-shot-img" />
+                  {hasMedia && (
+                    <div className="work-gallery">
+                      {p.gallery && p.gallery.length > 0 ? (
+                        <div className="journey-gallery">
+                          <div className="journey-label">/ User journey · {p.gallery.length} pasos</div>
+                          <div className="journey-filmstrip">
+                            {p.gallery.map((g, i) => (
+                              <button
+                                key={g.step}
+                                type="button"
+                                className="journey-step"
+                                data-hover
+                                onClick={e => {
+                                  e.stopPropagation();
+                                  window.dispatchEvent(new CustomEvent('lightbox:open', {
+                                    detail: { gallery: p.gallery, index: i, project: p.name }
+                                  }));
+                                }}
+                                title={`${g.label}${g.sub ? ' — ' + g.sub : ''}`}
+                              >
+                                <div className="journey-step-thumb">
+                                  <img src={g.src} alt={`${p.name} · ${g.label}`} loading="lazy" />
+                                </div>
+                                <div className="journey-step-meta">
+                                  <span className="journey-step-num">{g.step}</span>
+                                  <span className="journey-step-label">{g.label}</span>
+                                </div>
+                              </button>
+                            ))}
+                          </div>
                         </div>
-                      ))
-                    ) : (
-                      <div className="work-shot" data-label="">
-                        <div className="work-shot-nda">
-                          <span>CONFIDENTIAL</span>
-                          <small>Sin preview pública · bajo acuerdo de confidencialidad</small>
-                        </div>
-                      </div>
-                    )}
-                  </div>
+                      ) : (
+                        imgs.map((src, i) => (
+                          <div key={i} className="work-shot" data-label="">
+                            <img src={src} alt={`${p.name} ${i + 1}`} className="work-shot-img" />
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  )}
                   <div className="work-meta">
                     <p>{p.desc}</p>
                     <div className="stack">
@@ -186,9 +234,20 @@ function Work() {
                         <span>→</span>
                       </a>
                     )}
+                    {p.slug && (
+                      <a
+                        className="work-link work-link-page"
+                        href={`#/proyectos/${p.slug}`}
+                        onClick={e => e.stopPropagation()}
+                        data-hover
+                      >
+                        <span>Ver página completa</span>
+                        <span>→</span>
+                      </a>
+                    )}
                   </div>
                 </div>
-              </div>
+              </div>}
             </div>
           );})}
         </div>
@@ -454,4 +513,308 @@ function Contact() {
   );
 }
 
-Object.assign(window, { Hero, Marquee, Work, Services, Now, About, Testimonials, Contact });
+// ================ LIGHTBOX ==================
+function Lightbox() {
+  const [state, setState] = useS({ open: false, gallery: [], index: 0, project: '' });
+
+  useE(() => {
+    const onOpen = (e) => setState({
+      open: true,
+      gallery: e.detail.gallery,
+      index: e.detail.index,
+      project: e.detail.project,
+    });
+    window.addEventListener('lightbox:open', onOpen);
+    return () => window.removeEventListener('lightbox:open', onOpen);
+  }, []);
+
+  useE(() => {
+    if (!state.open) return;
+    const onKey = (ev) => {
+      if (ev.key === 'Escape') setState(s => ({ ...s, open: false }));
+      else if (ev.key === 'ArrowRight') setState(s => ({ ...s, index: Math.min(s.index + 1, s.gallery.length - 1) }));
+      else if (ev.key === 'ArrowLeft') setState(s => ({ ...s, index: Math.max(s.index - 1, 0) }));
+      else if (ev.key === 'Home') setState(s => ({ ...s, index: 0 }));
+      else if (ev.key === 'End') setState(s => ({ ...s, index: s.gallery.length - 1 }));
+    };
+    window.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [state.open]);
+
+  if (!state.open) return null;
+  const current = state.gallery[state.index];
+  if (!current) return null;
+  const goto = (i) => setState(s => ({ ...s, index: Math.max(0, Math.min(i, s.gallery.length - 1)) }));
+  const close = () => setState(s => ({ ...s, open: false }));
+
+  return (
+    <div className="lightbox-overlay" onClick={close} role="dialog" aria-modal="true">
+      <div className="lightbox-frame" onClick={e => e.stopPropagation()}>
+        <div className="lightbox-header">
+          <div className="lightbox-counter">
+            <span className="lightbox-counter-current">{String(state.index + 1).padStart(2, '0')}</span>
+            <span className="lightbox-counter-divider"> / </span>
+            <span className="lightbox-counter-total">{String(state.gallery.length).padStart(2, '0')}</span>
+          </div>
+          <div className="lightbox-title">
+            <span className="lightbox-project">{state.project}</span>
+            <span className="lightbox-step"> · {current.step} · {current.label}</span>
+            {current.sub && <span className="lightbox-sub"> — {current.sub}</span>}
+          </div>
+          <button type="button" className="lightbox-close" onClick={close} aria-label="Cerrar" data-hover>✕</button>
+        </div>
+        <div className="lightbox-stage">
+          <button
+            type="button"
+            className="lightbox-nav lightbox-nav-prev"
+            onClick={() => goto(state.index - 1)}
+            disabled={state.index === 0}
+            aria-label="Anterior"
+            data-hover
+          >←</button>
+          <img className="lightbox-img" src={current.src} alt={current.label} />
+          <button
+            type="button"
+            className="lightbox-nav lightbox-nav-next"
+            onClick={() => goto(state.index + 1)}
+            disabled={state.index === state.gallery.length - 1}
+            aria-label="Siguiente"
+            data-hover
+          >→</button>
+        </div>
+        <div className="lightbox-stepper">
+          {state.gallery.map((g, i) => (
+            <button
+              key={g.step}
+              type="button"
+              className={`lightbox-tick ${i === state.index ? 'active' : ''}`}
+              onClick={() => goto(i)}
+              title={`${g.step} · ${g.label}`}
+              data-hover
+            >
+              <span className="lightbox-tick-num">{g.step}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ================ PROJECT PAGE · PAA TEC ==================
+function ProjectPaaTec() {
+  const p = PROJECTS.find(x => x.slug === 'paa-tec');
+  if (!p) return null;
+  return (
+    <div className="project-page">
+      <nav className="project-page-nav">
+        <a className="project-back-link" href="#work" data-hover>
+          <span>←</span>
+          <span>Volver al portfolio</span>
+        </a>
+        <a className="project-page-nav-meta" href="#work" data-hover>
+          <span>/ {p.num}</span>
+        </a>
+      </nav>
+
+      <header className="project-page-hero">
+        <div className="project-hero-grid">
+          <div className="project-hero-content">
+            <div className="project-page-meta">
+              <span>/ {p.num}</span>
+              <span>·</span>
+              <span>{p.year}</span>
+              <span>·</span>
+              <span>{p.tag}</span>
+              {p.press && p.press.length > 0 && (
+                <span className="press-badge">
+                  <span className="press-badge-dot"></span>EN MEDIOS
+                </span>
+              )}
+            </div>
+            <h1 className="project-page-title">{p.name}</h1>
+            <p className="project-page-desc">{p.desc}</p>
+            <p className="project-page-desc project-page-desc--extra">
+              Construido en el DATIC del TEC para el examen de admisión 2026-2027. Administra 102 preguntas configurables con scoring por área, soporte mobile real y un flujo completo de 10 pasos. Auditoría de seguridad completada y arquitectura feature-first lista para mantener la pieza institucional por varios ciclos.
+            </p>
+            <div className="project-page-cta-row">
+              <a
+                className="work-link work-link-page"
+                href="#journey"
+                data-hover
+                onClick={e => {
+                  e.preventDefault();
+                  const el = document.getElementById('journey');
+                  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}
+              >
+                <span>Ver el flujo</span>
+                <span>↓</span>
+              </a>
+              {p.press && p.press.length > 0 && (
+                <a
+                  className="work-link"
+                  href="#press"
+                  data-hover
+                  onClick={e => {
+                    e.preventDefault();
+                    const el = document.getElementById('press');
+                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }}
+                >
+                  <span>En medios</span>
+                  <span>↓</span>
+                </a>
+              )}
+            </div>
+          </div>
+          {p.cover && (
+            <div className="project-hero-visual">
+              <div className="project-hero-visual-frame">
+                <div className="project-hero-visual-dots">
+                  <span></span><span></span><span></span>
+                </div>
+                <img src={p.cover} alt={`${p.name} · preview`} className="project-hero-visual-img" />
+              </div>
+              <div className="project-hero-visual-label">
+                <span>preview.live</span>
+                <span>·</span>
+                <span>{p.year}</span>
+              </div>
+            </div>
+          )}
+        </div>
+      </header>
+
+      <section className="project-stats-strip">
+        <div className="project-stat">
+          <div className="project-stat-num">10</div>
+          <div className="project-stat-label">Pasos en el flujo</div>
+        </div>
+        <div className="project-stat">
+          <div className="project-stat-num">102</div>
+          <div className="project-stat-label">Preguntas configurables</div>
+        </div>
+        <div className="project-stat">
+          <div className="project-stat-num">101</div>
+          <div className="project-stat-label">Tests automatizados</div>
+        </div>
+        <div className="project-stat">
+          <div className="project-stat-num">5</div>
+          <div className="project-stat-label">Menciones en medios</div>
+        </div>
+        <div className="project-stat">
+          <div className="project-stat-num">0–3</div>
+          <div className="project-stat-label">Fases de auditoría · ok</div>
+        </div>
+      </section>
+
+      {p.gallery && p.gallery.length > 0 && (
+        <section className="project-page-section" id="journey">
+          <h2 className="project-page-section-title">/ User journey · {p.gallery.length} pasos</h2>
+          <p className="project-page-section-lead">
+            El flujo real del estudiante, desde el login con cédula hasta la revisión pregunta por pregunta. Click en cualquier paso abre el viewer fullscreen — navegación con flechas o ESC para cerrar.
+          </p>
+          <div className="journey-gallery project-journey">
+            <div className="journey-filmstrip">
+              {p.gallery.map((g, i) => (
+                <button
+                  key={g.step}
+                  type="button"
+                  className="journey-step"
+                  data-hover
+                  onClick={() => {
+                    window.dispatchEvent(new CustomEvent('lightbox:open', {
+                      detail: { gallery: p.gallery, index: i, project: p.name }
+                    }));
+                  }}
+                  title={`${g.label}${g.sub ? ' — ' + g.sub : ''}`}
+                >
+                  <div className="journey-step-thumb">
+                    <img src={g.src} alt={`${p.name} · ${g.label}`} loading="lazy" />
+                  </div>
+                  <div className="journey-step-meta">
+                    <span className="journey-step-num">{g.step}</span>
+                    <span className="journey-step-label">{g.label}</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {p.press && p.press.length > 0 && (
+        <section className="project-page-section" id="press">
+          <h2 className="project-page-section-title">/ En medios</h2>
+          <p className="project-page-section-lead">
+            Cobertura nacional del lanzamiento el 20–21 de mayo 2026. Telenoticias abrió con el clip en TV y radio; los diarios online publicaron al día siguiente.
+          </p>
+          <div className="press project-press">
+            <ul className="press-list">
+              {p.press.map((m, i) => (
+                <li key={i}>
+                  {m.url ? (
+                    <a
+                      href={m.url}
+                      target="_blank"
+                      rel="noopener"
+                      data-hover
+                    >
+                      <span className="press-outlet">{m.outlet}{m.medium ? ` · ${m.medium}` : ''}</span>
+                      <span className="press-date">{m.date}</span>
+                      <span className="press-arrow">→</span>
+                    </a>
+                  ) : (
+                    <span className="press-static">
+                      <span className="press-outlet">{m.outlet}{m.medium ? ` · ${m.medium}` : ''}</span>
+                      <span className="press-date">{m.date}</span>
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
+      <section className="project-page-section" id="stack">
+        <h2 className="project-page-section-title">/ Stack</h2>
+        <div className="project-stack">
+          {p.tech.map(t => <span key={t} className="chip chip-lg">{t}</span>)}
+        </div>
+        <div className="project-stack-extras">
+          <div className="stack-extra">
+            <span className="stack-extra-label">Repositorio</span>
+            <span className="stack-extra-value">Privado · DATIC TEC</span>
+          </div>
+          <div className="stack-extra">
+            <span className="stack-extra-label">Backend</span>
+            <span className="stack-extra-value">Web API .NET legacy</span>
+          </div>
+          <div className="stack-extra">
+            <span className="stack-extra-label">Testing</span>
+            <span className="stack-extra-value">Vitest 4 · jsdom · Testing Library · 101 tests</span>
+          </div>
+          <div className="stack-extra">
+            <span className="stack-extra-label">Rol</span>
+            <span className="stack-extra-value">Software Engineer</span>
+          </div>
+        </div>
+      </section>
+
+      <footer className="project-page-footer">
+        <a className="project-back-link" href="#work" data-hover>
+          <span>←</span>
+          <span>Volver al portfolio</span>
+        </a>
+      </footer>
+    </div>
+  );
+}
+
+Object.assign(window, { Hero, Marquee, Work, Services, Now, About, Testimonials, Contact, Lightbox, ProjectPaaTec });

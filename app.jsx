@@ -145,6 +145,21 @@ function App() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  const [route, setRoute] = uS(window.location.hash || '');
+  uE(() => {
+    const onHash = () => setRoute(window.location.hash || '');
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
+
+  const projectMatch = route.match(/^#\/proyectos\/([a-z0-9-]+)/i);
+  const projectSlug = projectMatch ? projectMatch[1] : null;
+  const isProjectPage = projectSlug === 'paa-tec';
+
+  uE(() => {
+    if (isProjectPage) window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [isProjectPage]);
+
   const jump = (id) => {
     const el = document.getElementById(id);
     if (!el) return;
@@ -160,22 +175,29 @@ function App() {
           <div id="c-ring" className="cursor-ring"></div>
         </>
       )}
-      <nav className="topnav" data-hover>
-        <a className={active === 'top' ? 'active' : ''} onClick={() => jump('top')}>Home</a>
-        <a className={active === 'work' ? 'active' : ''} onClick={() => jump('work')}>Work</a>
-        <a className={active === 'services' ? 'active' : ''} onClick={() => jump('services')}>Services</a>
-        <a className={active === 'contact' ? 'active' : ''} onClick={() => jump('contact')}>Contact</a>
-      </nav>
+      {isProjectPage ? (
+        <window.ProjectPaaTec />
+      ) : (
+        <>
+          <nav className="topnav" data-hover>
+            <a className={active === 'top' ? 'active' : ''} onClick={() => jump('top')}>Home</a>
+            <a className={active === 'work' ? 'active' : ''} onClick={() => jump('work')}>Work</a>
+            <a className={active === 'services' ? 'active' : ''} onClick={() => jump('services')}>Services</a>
+            <a className={active === 'contact' ? 'active' : ''} onClick={() => jump('contact')}>Contact</a>
+          </nav>
 
-      <window.Hero />
-      <window.Marquee />
-      <window.Work />
-      <window.Services />
-      <window.Now />
-      <window.Contact />
-      <window.ConsoleFooter variant={state.footer || 'manifesto'} />
+          <window.Hero />
+          <window.Marquee />
+          <window.Work />
+          <window.Services />
+          <window.Now />
+          <window.Contact />
+          <window.ConsoleFooter variant={state.footer || 'manifesto'} />
+        </>
+      )}
 
       <Tweaks state={state} setState={setState} />
+      <window.Lightbox />
     </>
   );
 }
