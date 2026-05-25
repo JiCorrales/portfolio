@@ -798,20 +798,12 @@ function ProjectPaaTec() {
         </div>
         <div className="project-stack-extras">
           <div className="stack-extra">
-            <span className="stack-extra-label">Repositorio</span>
-            <span className="stack-extra-value">Privado · DATIC TEC</span>
-          </div>
-          <div className="stack-extra">
-            <span className="stack-extra-label">Backend</span>
-            <span className="stack-extra-value">Web API .NET legacy</span>
-          </div>
-          <div className="stack-extra">
-            <span className="stack-extra-label">Testing</span>
-            <span className="stack-extra-value">Vitest 4 · jsdom · Testing Library · 101 tests</span>
+            <span className="stack-extra-label">Org</span>
+            <span className="stack-extra-value">DATIC - ITCR</span>
           </div>
           <div className="stack-extra">
             <span className="stack-extra-label">Rol</span>
-            <span className="stack-extra-value">Software Engineer</span>
+            <span className="stack-extra-value">Software Architect</span>
           </div>
         </div>
       </section>
