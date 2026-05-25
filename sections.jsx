@@ -76,6 +76,7 @@ const PROJECTS = [
     tag: 'Plataforma · Educación',
     year: '2026',
     tech: ['React 19', 'TypeScript', 'Vite 7', 'Vitest', 'JWT'],
+    techBack: ['.NET', 'SQL Server', 'C#'],
     cover: 'screenshots/paa-tec/04-welcome.png',
     link: 'https://tec.ac.cr/admision/practicaexamen',
     desc: 'Aplicación web para practicar el examen de admisión del TEC. Arquitectura feature-first con flujo completo de login, consentimiento, examen cronometrado y revisión de resultados, con soporte mobile y cobertura de pruebas automatizadas.',
@@ -793,17 +794,26 @@ function ProjectPaaTec() {
 
       <section className="project-page-section" id="stack">
         <h2 className="project-page-section-title">/ Stack</h2>
-        <div className="project-stack">
-          {p.tech.map(t => <span key={t} className="chip chip-lg">{t}</span>)}
+        <div className="project-stack-groups">
+          <div className="project-stack-group">
+            <span className="stack-extra-label">Frontend</span>
+            <div className="project-stack">
+              {p.tech.map(t => <span key={t} className="chip chip-lg">{t}</span>)}
+            </div>
+          </div>
+          {p.techBack && p.techBack.length > 0 && (
+            <div className="project-stack-group">
+              <span className="stack-extra-label">Backend</span>
+              <div className="project-stack">
+                {p.techBack.map(t => <span key={t} className="chip chip-lg">{t}</span>)}
+              </div>
+            </div>
+          )}
         </div>
         <div className="project-stack-extras">
           <div className="stack-extra">
             <span className="stack-extra-label">Accesibilidad</span>
             <span className="stack-extra-value">WCAG 2.2 AA ~98% · Lighthouse a11y 100 · axe 0 violaciones</span>
-          </div>
-          <div className="stack-extra">
-            <span className="stack-extra-label">Backend</span>
-            <span className="stack-extra-value">.NET · SQL Server · C#</span>
           </div>
           <div className="stack-extra">
             <span className="stack-extra-label">Org</span>

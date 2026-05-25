@@ -1221,6 +1221,20 @@ section {
   gap: 10px;
   margin-bottom: 40px;
 }
+.project-stack-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-bottom: 40px;
+}
+.project-stack-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.project-stack-group .project-stack {
+  margin-bottom: 0;
+}
 .chip.chip-lg {
   font-size: 13px;
   padding: 8px 16px;
