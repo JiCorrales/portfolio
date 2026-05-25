@@ -77,18 +77,20 @@ const PROJECTS = [
     year: '2026',
     tech: ['React 19', 'TypeScript', 'Vite', 'Vitest'],
     cover: 'screenshots/paa-tec/04-welcome.png',
+    link: 'https://tec.ac.cr/admision/practicaexamen',
     desc: 'Aplicación web para practicar el examen de admisión del TEC. Arquitectura feature-first con flujo completo de login, consentimiento, examen cronometrado y revisión de resultados, con soporte mobile y cobertura de pruebas automatizadas.',
     press: [
+      { outlet: 'TEC · Comunicado oficial', date: '2026-05-19', url: 'https://www.tec.ac.cr/nueva-practica-linea-permitira-prepararse-mejor-examen-admision-tec' },
       { outlet: 'Delfino', date: '2026-05-19', url: 'https://delfino.cr/2026/05/tec-habilita-plataforma-en-linea-para-practicar-para-su-examen-de-admision' },
       { outlet: 'La Teja', date: '2026-05-19', url: 'https://www.lateja.cr/nacional/quiere-estudiar-en-el-tec-habilitan-nueva-practica/O57WJKCYCVHLXAAU44FE3VWUZA/story/' },
-      { outlet: 'Telenoticias', date: '2026-05-20', medium: 'TV' },
-      { outlet: 'Telenoticias Radio', date: '2026-05-20', medium: 'Radio' },
+      { outlet: 'Telenoticias', date: '2026-05-20', medium: 'TV', clip: 'media/paa-tec/telenoticias-tv-20may.mp4', poster: 'media/paa-tec/telenoticias-tv-20may.jpg' },
+      { outlet: 'Telenoticias Radio', date: '2026-05-20', medium: 'Radio', clip: 'media/paa-tec/telenoticias-radio-20may.mp3' },
       { outlet: 'La Nación', date: '2026-05-21', url: 'https://www.nacion.com/el-pais/tec-habilita-nueva-practica-interactiva-en-linea/7NJGWOILV5DALGOUJP2RDA3HQE/story/' },
       { outlet: 'Velero Informativo', date: '2026-05-21', url: 'https://velero.cr/2026/05/nueva-practica-en-linea-permitira-prepararse-mejor-para-el-examen-de-admision-al-tec/' },
       { outlet: 'Periódico Mensaje', date: '2026-05-21', url: 'https://www.periodicomensaje.com/educacion/14854-nueva-practica-en-linea-permitira-prepararse-mejor-para-el-examen-de-admision-al-tec-nueva-practica-en-linea-permitira-prepararse-mejor-para-el-examen-de-admision-al-tec' },
-      { outlet: 'Noticias Repretel', date: '2026-05-22', medium: 'TV' },
+      { outlet: 'Noticias Repretel', date: '2026-05-22', medium: 'TV', clip: 'media/paa-tec/repretel-tv-22may.mp4', poster: 'media/paa-tec/repretel-tv-22may.jpg' },
       { outlet: 'Repretel', date: '2026-05-25', url: 'https://www.repretel.com/noticia/va-para-el-examen-del-tec-lanzan-herramienta-que-podria-ayudarle-a-prepararse/' },
-      { outlet: 'Noticias Columbia', date: '2026-05-25', medium: 'Radio' },
+      { outlet: 'Noticias Columbia', date: '2026-05-25', medium: 'Radio', clip: 'media/paa-tec/columbia-radio-25may.mp3' },
     ],
     gallery: [
       { src: 'screenshots/paa-tec/01-login.png',            step: '01',  label: 'Login',               sub: 'Auth con cédula y código' },
@@ -647,6 +649,18 @@ function ProjectPaaTec() {
               Construido en el DATIC del TEC para el examen de admisión 2026-2027. Administra 102 preguntas configurables con scoring por área, soporte mobile real y un flujo completo de 10 pasos. Auditoría de seguridad completada y arquitectura feature-first lista para mantener la pieza institucional por varios ciclos.
             </p>
             <div className="project-page-cta-row">
+              {p.link && (
+                <a
+                  className="work-link"
+                  href={p.link}
+                  target="_blank"
+                  rel="noopener"
+                  data-hover
+                >
+                  <span>Ver en vivo</span>
+                  <span>→</span>
+                </a>
+              )}
               <a
                 className="work-link work-link-page"
                 href="#journey"
@@ -735,7 +749,7 @@ function ProjectPaaTec() {
         <section className="project-page-section" id="press">
           <h2 className="project-page-section-title">/ En medios</h2>
           <p className="project-page-section-lead">
-            Cobertura nacional sostenida del lanzamiento, del 19 al 25 de mayo 2026: 10 apariciones en prensa digital, TV y radio. Delfino y La Teja rompieron la noticia; le siguieron Telenoticias, La Nación, Repretel, Columbia y más.
+            Cobertura nacional sostenida del lanzamiento, del 19 al 25 de mayo 2026: 11 apariciones entre el comunicado oficial del TEC, prensa digital, TV y radio. Delfino y La Teja rompieron la noticia; le siguieron Telenoticias, La Nación, Repretel, Columbia y más. Los segmentos de TV y radio se pueden ver y escuchar acá mismo.
           </p>
           <div className="press project-press">
             <ul className="press-list">
@@ -752,6 +766,18 @@ function ProjectPaaTec() {
                       <span className="press-date">{m.date}</span>
                       <span className="press-arrow">→</span>
                     </a>
+                  ) : m.clip ? (
+                    <div className="press-clip">
+                      <span className="press-static">
+                        <span className="press-outlet">{m.outlet}{m.medium ? ` · ${m.medium}` : ''}</span>
+                        <span className="press-date">{m.date}</span>
+                      </span>
+                      {m.clip.endsWith('.mp4') ? (
+                        <video className="press-video" controls preload="none" poster={m.poster} src={m.clip}></video>
+                      ) : (
+                        <audio className="press-audio" controls preload="none" src={m.clip}></audio>
+                      )}
+                    </div>
                   ) : (
                     <span className="press-static">
                       <span className="press-outlet">{m.outlet}{m.medium ? ` · ${m.medium}` : ''}</span>

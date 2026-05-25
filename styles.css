@@ -1148,6 +1148,28 @@ section {
   background: oklch(0.83 0.17 130 / 0.08);
   padding-left: 20px;
 }
+.project-press .press-list .press-clip {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px 12px;
+}
+.project-press .press-list .press-clip .press-static {
+  padding: 0;
+}
+.project-press .press-list .press-audio {
+  width: 100%;
+  max-width: 440px;
+  height: 38px;
+}
+.project-press .press-list .press-video {
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 16 / 9;
+  border-radius: 6px;
+  background: #000;
+  display: block;
+}
 
 .project-decisions {
   display: grid;

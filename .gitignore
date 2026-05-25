@@ -6,3 +6,6 @@ node_modules/
 *.log
 .claude/
 memory/
+
+# Originales sin comprimir de los clips de prensa (pesados; en el repo van los .mp4 comprimidos)
+media/**/*.orig.mp4
