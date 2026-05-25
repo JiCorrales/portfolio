@@ -798,6 +798,14 @@ function ProjectPaaTec() {
         </div>
         <div className="project-stack-extras">
           <div className="stack-extra">
+            <span className="stack-extra-label">Accesibilidad</span>
+            <span className="stack-extra-value">WCAG 2.2 AA ~98% · Lighthouse a11y 100 · axe 0 violaciones</span>
+          </div>
+          <div className="stack-extra">
+            <span className="stack-extra-label">Backend</span>
+            <span className="stack-extra-value">.NET · SQL Server · C#</span>
+          </div>
+          <div className="stack-extra">
             <span className="stack-extra-label">Org</span>
             <span className="stack-extra-value">DATIC - ITCR</span>
           </div>
