@@ -75,7 +75,7 @@ const PROJECTS = [
     name: 'Examen Práctica PAA TEC',
     tag: 'Plataforma · Educación',
     year: '2026',
-    tech: ['React 19', 'TypeScript', 'Vite', 'Vitest'],
+    tech: ['React 19', 'TypeScript', 'Vite 7', 'Vitest', 'JWT'],
     cover: 'screenshots/paa-tec/04-welcome.png',
     link: 'https://tec.ac.cr/admision/practicaexamen',
     desc: 'Aplicación web para practicar el examen de admisión del TEC. Arquitectura feature-first con flujo completo de login, consentimiento, examen cronometrado y revisión de resultados, con soporte mobile y cobertura de pruebas automatizadas.',
