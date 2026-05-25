@@ -1078,43 +1078,6 @@ section {
   margin: 0 0 36px;
 }
 
-/* ---------- Project stats strip ---------- */
-.project-stats-strip {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 0;
-  margin: 48px 0 0;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  background: linear-gradient(180deg, oklch(0.16 0.01 260) 0%, oklch(0.11 0.005 260) 100%);
-  overflow: hidden;
-}
-.project-stat {
-  padding: 28px 24px;
-  border-right: 1px solid var(--line-soft);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  transition: background .3s;
-}
-.project-stat:last-child { border-right: none; }
-.project-stat:hover { background: oklch(0.78 0.15 65 / 0.04); }
-.project-stat-num {
-  font-family: 'Instrument Serif', serif;
-  font-size: 56px;
-  line-height: 0.95;
-  letter-spacing: -0.02em;
-  color: var(--k-amber);
-}
-.project-stat-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  line-height: 1.4;
-}
-
 /* ---------- Project journey (gallery prominente) ---------- */
 .project-journey .journey-filmstrip {
   padding: 8px 4px 20px;
@@ -1337,21 +1300,6 @@ section {
   .project-stack-extras { grid-template-columns: 1fr; gap: 16px; }
   .project-hero-grid { grid-template-columns: 1fr; gap: 32px; }
   .project-hero-visual { order: -1; }
-  .project-stats-strip {
-    grid-template-columns: repeat(2, 1fr);
-    margin-top: 32px;
-  }
-  .project-stat { padding: 20px 16px; border-bottom: 1px solid var(--line-soft); }
-  .project-stat:nth-child(2n) { border-right: none; }
-  .project-stat:nth-last-child(-n+2):not(:nth-child(2n)) { border-bottom: none; }
-  .project-stat:last-child { border-bottom: none; grid-column: span 2; }
-  .project-stat-num { font-size: 44px; }
-}
-
-@media (max-width: 600px) {
-  .project-stats-strip { grid-template-columns: 1fr; }
-  .project-stat { border-right: none; border-bottom: 1px solid var(--line-soft); }
-  .project-stat:last-child { border-bottom: none; grid-column: auto; }
 }
 
 /* ---------- Services ---------- */

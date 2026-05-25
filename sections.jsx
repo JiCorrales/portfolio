@@ -79,11 +79,16 @@ const PROJECTS = [
     cover: 'screenshots/paa-tec/04-welcome.png',
     desc: 'Aplicación web para practicar el examen de admisión del TEC. Arquitectura feature-first con flujo completo de login, consentimiento, examen cronometrado y revisión de resultados, con soporte mobile y cobertura de pruebas automatizadas.',
     press: [
+      { outlet: 'Delfino', date: '2026-05-19', url: 'https://delfino.cr/2026/05/tec-habilita-plataforma-en-linea-para-practicar-para-su-examen-de-admision' },
+      { outlet: 'La Teja', date: '2026-05-19', url: 'https://www.lateja.cr/nacional/quiere-estudiar-en-el-tec-habilitan-nueva-practica/O57WJKCYCVHLXAAU44FE3VWUZA/story/' },
+      { outlet: 'Telenoticias', date: '2026-05-20', medium: 'TV' },
+      { outlet: 'Telenoticias Radio', date: '2026-05-20', medium: 'Radio' },
       { outlet: 'La Nación', date: '2026-05-21', url: 'https://www.nacion.com/el-pais/tec-habilita-nueva-practica-interactiva-en-linea/7NJGWOILV5DALGOUJP2RDA3HQE/story/' },
       { outlet: 'Velero Informativo', date: '2026-05-21', url: 'https://velero.cr/2026/05/nueva-practica-en-linea-permitira-prepararse-mejor-para-el-examen-de-admision-al-tec/' },
       { outlet: 'Periódico Mensaje', date: '2026-05-21', url: 'https://www.periodicomensaje.com/educacion/14854-nueva-practica-en-linea-permitira-prepararse-mejor-para-el-examen-de-admision-al-tec-nueva-practica-en-linea-permitira-prepararse-mejor-para-el-examen-de-admision-al-tec' },
-      { outlet: 'Telenoticias', date: '2026-05-20', medium: 'TV' },
-      { outlet: 'Telenoticias Radio', date: '2026-05-20' },
+      { outlet: 'Noticias Repretel', date: '2026-05-22', medium: 'TV' },
+      { outlet: 'Repretel', date: '2026-05-25', url: 'https://www.repretel.com/noticia/va-para-el-examen-del-tec-lanzan-herramienta-que-podria-ayudarle-a-prepararse/' },
+      { outlet: 'Noticias Columbia', date: '2026-05-25', medium: 'Radio' },
     ],
     gallery: [
       { src: 'screenshots/paa-tec/01-login.png',            step: '01',  label: 'Login',               sub: 'Auth con cédula y código' },
@@ -690,28 +695,6 @@ function ProjectPaaTec() {
         </div>
       </header>
 
-      <section className="project-stats-strip">
-        <div className="project-stat">
-          <div className="project-stat-num">10</div>
-          <div className="project-stat-label">Pasos en el flujo</div>
-        </div>
-        <div className="project-stat">
-          <div className="project-stat-num">102</div>
-          <div className="project-stat-label">Preguntas configurables</div>
-        </div>
-        <div className="project-stat">
-          <div className="project-stat-num">101</div>
-          <div className="project-stat-label">Tests automatizados</div>
-        </div>
-        <div className="project-stat">
-          <div className="project-stat-num">5</div>
-          <div className="project-stat-label">Menciones en medios</div>
-        </div>
-        <div className="project-stat">
-          <div className="project-stat-num">0–3</div>
-          <div className="project-stat-label">Fases de auditoría · ok</div>
-        </div>
-      </section>
 
       {p.gallery && p.gallery.length > 0 && (
         <section className="project-page-section" id="journey">
@@ -752,7 +735,7 @@ function ProjectPaaTec() {
         <section className="project-page-section" id="press">
           <h2 className="project-page-section-title">/ En medios</h2>
           <p className="project-page-section-lead">
-            Cobertura nacional del lanzamiento el 20–21 de mayo 2026. Telenoticias abrió con el clip en TV y radio; los diarios online publicaron al día siguiente.
+            Cobertura nacional sostenida del lanzamiento, del 19 al 25 de mayo 2026: 10 apariciones en prensa digital, TV y radio. Delfino y La Teja rompieron la noticia; le siguieron Telenoticias, La Nación, Repretel, Columbia y más.
           </p>
           <div className="press project-press">
             <ul className="press-list">
