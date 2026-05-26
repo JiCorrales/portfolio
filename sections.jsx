@@ -79,7 +79,7 @@ const PROJECTS = [
     techBack: ['.NET', 'SQL Server', 'C#'],
     cover: 'screenshots/paa-tec/04-welcome.png',
     link: 'https://tec.ac.cr/admision/practicaexamen',
-    desc: 'Aplicación web para practicar el examen de admisión del TEC. Arquitectura feature-first con flujo completo de login, consentimiento, examen cronometrado y revisión de resultados, con soporte mobile y cobertura de pruebas automatizadas.',
+    desc: 'Plataforma con la que cualquier persona puede practicar el examen de admisión del TEC en las mismas condiciones del examen real: preguntas con tiempo cronometrado, retroalimentación inmediata y revisión de resultados por área para llegar mejor preparada el día de la prueba.',
     press: [
       { outlet: 'TEC · Comunicado oficial', date: '2026-05-19', url: 'https://www.tec.ac.cr/nueva-practica-linea-permitira-prepararse-mejor-examen-admision-tec' },
       { outlet: 'Delfino', date: '2026-05-19', url: 'https://delfino.cr/2026/05/tec-habilita-plataforma-en-linea-para-practicar-para-su-examen-de-admision' },
@@ -647,7 +647,7 @@ function ProjectPaaTec() {
             <h1 className="project-page-title">{p.name}</h1>
             <p className="project-page-desc">{p.desc}</p>
             <p className="project-page-desc project-page-desc--extra">
-              Construido en el DATIC del TEC para el examen de admisión 2026-2027. Administra 102 preguntas configurables con scoring por área, soporte mobile real y un flujo completo de 10 pasos. Auditoría de seguridad completada y arquitectura feature-first lista para mantener la pieza institucional por varios ciclos.
+              Es la primera práctica interactiva en línea del TEC para su examen de admisión 2026-2027. Permite a quienes aspiran a ingresar ensayar el examen completo —desde que se identifican hasta que revisan cada respuesta—, ver su puntaje por área (Matemática y Verbal) y repetir la práctica las veces que quieran para reforzar lo que más les cuesta. Funciona igual desde el celular o la computadora, con una idea simple: que ningún estudiante llegue al examen real sin haberlo vivido antes.
             </p>
             <div className="project-page-cta-row">
               {p.link && (
