@@ -68,11 +68,10 @@ function Marquee() {
 
 // ================ WORK ==================
 const PROJECTS = [
-  { num: '01', name: 'Learning Commons TEC', tag: 'Sistema · Asistencia', year: '2025', tech: ['Angular 21', 'Express', 'PostgreSQL', 'TypeScript'], desc: 'Sistema de gestión operativa para el Learning Commons y Biblioteca BJFF del TEC. Controla logs de asistencia en 7 modalidades, reservas de cubículos, horas trabajadas y RBAC para administradores y asistentes en dos sedes.' },
   {
-    num: '02',
+    num: '01',
     slug: 'paa-tec',
-    name: 'Examen Práctica PAA TEC',
+    name: 'Práctica Examen TEC',
     tag: 'Plataforma · Educación',
     year: '2026',
     tech: ['React 19', 'TypeScript', 'Vite 7', 'Vitest', 'JWT'],
@@ -106,6 +105,7 @@ const PROJECTS = [
       { src: 'screenshots/paa-tec/08-review.png',           step: '08',  label: 'Revisión',            sub: 'Review pregunta por pregunta' },
     ],
   },
+  { num: '02', name: 'Learning Commons TEC', tag: 'Sistema · Asistencia', year: '2025', tech: ['Angular 21', 'Express', 'PostgreSQL', 'TypeScript'], desc: 'Sistema de gestión operativa para el Learning Commons y Biblioteca BJFF del TEC. Controla logs de asistencia en 7 modalidades, reservas de cubículos, horas trabajadas y RBAC para administradores y asistentes en dos sedes.' },
   { num: '03', name: 'BJFF Book Locator', tag: 'Sistema · Biblioteca', year: '2026', tech: ['Astro', 'React 19', 'TypeScript', 'Express', 'Prisma', 'PostgreSQL'], desc: 'Sistema de localización de libros para la Biblioteca José Figueres Ferrer del TEC. Parser de clasificación normalizada, motor de búsqueda por rangos en estanterías y módulo admin para mapear la estructura física de la biblioteca sobre la base de datos.' },
   { num: '04', name: 'Creador de Horario TEC', tag: 'SPA · Chrome Extension', year: '2025', tech: ['React 18', 'TypeScript', 'Vite', 'Tailwind', 'jsPDF', 'Chrome Extension MV3'], link: 'https://creadordehorario.vercel.app/', imgs: ['screenshots/creador-de-horario.png', 'screenshots/creador-de-horario-2.png'], desc: 'SPA para armar el horario universitario del TEC de forma visual, con exportación a PDF y Excel. Acompañada de una extensión de Chrome que extrae los cursos directamente del sistema de matrícula institucional y los importa en un clic.' },
 ];
