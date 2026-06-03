@@ -1468,7 +1468,7 @@ section {
 /* ---------- Now ---------- */
 .now-grid {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
+  grid-template-columns: 1fr;
   gap: 60px;
   align-items: start;
 }

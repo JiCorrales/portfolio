@@ -105,9 +105,10 @@ const PROJECTS = [
       { src: 'screenshots/paa-tec/08-review.png',           step: '08',  label: 'Revisión',            sub: 'Review pregunta por pregunta' },
     ],
   },
-  { num: '02', name: 'Learning Commons TEC', tag: 'Sistema · Asistencia', year: '2025', tech: ['Angular 21', 'Express', 'PostgreSQL', 'TypeScript'], desc: 'Sistema de gestión operativa para el Learning Commons y Biblioteca BJFF del TEC. Controla logs de asistencia en 7 modalidades, reservas de cubículos, horas trabajadas y RBAC para administradores y asistentes en dos sedes.' },
-  { num: '03', name: 'BJFF Book Locator', tag: 'Sistema · Biblioteca', year: '2026', tech: ['Astro', 'React 19', 'TypeScript', 'Express', 'Prisma', 'PostgreSQL'], desc: 'Sistema de localización de libros para la Biblioteca José Figueres Ferrer del TEC. Parser de clasificación normalizada, motor de búsqueda por rangos en estanterías y módulo admin para mapear la estructura física de la biblioteca sobre la base de datos.' },
-  { num: '04', name: 'Creador de Horario TEC', tag: 'SPA · Chrome Extension', year: '2025', tech: ['React 18', 'TypeScript', 'Vite', 'Tailwind', 'jsPDF', 'Chrome Extension MV3'], link: 'https://creadordehorario.vercel.app/', imgs: ['screenshots/creador-de-horario.png', 'screenshots/creador-de-horario-2.png'], desc: 'SPA para armar el horario universitario del TEC de forma visual, con exportación a PDF y Excel. Acompañada de una extensión de Chrome que extrae los cursos directamente del sistema de matrícula institucional y los importa en un clic.' },
+  { num: '02', name: 'Facturación Electrónica CR', tag: 'Plataforma · Facturación', year: '2026', tech: ['Node.js', 'TypeScript', 'Express', 'Drizzle ORM', 'PostgreSQL', 'XAdES-EPES', 'React 19'], desc: 'Middleware REST que emite comprobantes electrónicos firmados (factura, nota de crédito/débito, tiquete) contra la API del Ministerio de Hacienda de Costa Rica. Encapsula la firma XAdES-EPES con certificado P12, OAuth2, consecutivos atómicos y multi-tenant — validado en producción con documentos reales aceptados por Hacienda.' },
+  { num: '03', name: 'Learning Commons TEC', tag: 'Sistema · Asistencia', year: '2025', tech: ['Angular 21', 'Express', 'PostgreSQL', 'TypeScript'], desc: 'Sistema de gestión operativa para el Learning Commons y Biblioteca BJFF del TEC. Controla logs de asistencia en 7 modalidades, reservas de cubículos, horas trabajadas y RBAC para administradores y asistentes en dos sedes.' },
+  { num: '04', name: 'BJFF Book Locator', tag: 'Sistema · Biblioteca', year: '2026', tech: ['Astro', 'React 19', 'TypeScript', 'Express', 'Prisma', 'PostgreSQL'], desc: 'Sistema de localización de libros para la Biblioteca José Figueres Ferrer del TEC. Parser de clasificación normalizada, motor de búsqueda por rangos en estanterías y módulo admin para mapear la estructura física de la biblioteca sobre la base de datos.' },
+  { num: '05', name: 'Creador de Horario TEC', tag: 'SPA · Chrome Extension', year: '2025', tech: ['React 18', 'TypeScript', 'Vite', 'Tailwind', 'jsPDF', 'Chrome Extension MV3'], link: 'https://creadordehorario.vercel.app/', imgs: ['screenshots/creador-de-horario.png', 'screenshots/creador-de-horario-2.png'], desc: 'SPA para armar el horario universitario del TEC de forma visual, con exportación a PDF y Excel. Acompañada de una extensión de Chrome que extrae los cursos directamente del sistema de matrícula institucional y los importa en un clic.' },
 ];
 
 function Work() {
@@ -362,12 +363,11 @@ function Services() {
 // ================ NOW ==================
 function Now() {
   const now = [
-    { when: '/NOW', what: 'BJFF Book Locator — localizador de libros para la Biblioteca del TEC', p: 65 },
+    { when: '/NOW', what: 'Servicio de facturación electrónica — middleware contra Hacienda CR (DGT)', p: 80 },
     { when: '/NEXT', what: 'organizador-web + bot de Telegram sobre Postgres compartido', p: 40 },
     { when: '/SOON', what: 'Integración creadordehorario ↔ organizador-web vía envelope JSON', p: 15 },
     { when: '/SOON', what: 'Tienda BARCA Agroforestal — e-commerce para productos forestales', p: 5 },
   ];
-  const stack = ['TypeScript', 'React', 'Next.js', 'Node.js', 'Postgres', 'Docker', 'AWS', 'Tailwind', 'Prisma', 'tRPC'];
   return (
     <section id="now">
       <div className="wrap">
@@ -375,7 +375,7 @@ function Now() {
         <h2 className="section-title">Lo que estoy <em>construyendo</em> ahora.</h2>
         <div className="now-grid">
           <div className="now-card">
-            <h4>En el escritorio · Abril 2026</h4>
+            <h4>En el escritorio · Junio 2026</h4>
             <ul className="now-list">
               {now.map((n, i) => (
                 <li key={i}>
@@ -385,26 +385,6 @@ function Now() {
                 </li>
               ))}
             </ul>
-          </div>
-          <div className="now-card">
-            <h4>Stack preferido</h4>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-              {stack.map(t => (
-                <span key={t} style={{
-                  fontFamily: 'JetBrains Mono, monospace',
-                  fontSize: 12,
-                  padding: '6px 12px',
-                  border: '1px solid var(--line)',
-                  borderRadius: 999,
-                  color: 'var(--ink-dim)',
-                  letterSpacing: '0.05em',
-                }}>{t}</span>
-              ))}
-            </div>
-            <div style={{ marginTop: 24, paddingTop: 20, borderTop: '1px dashed var(--line-soft)', fontSize: 13, color: 'var(--ink-dim)' }}>
-              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--ink-mute)', marginBottom: 8 }}>Escuchando</div>
-              <div>Tame Impala · Currents — loop infinito mientras compilo.</div>
-            </div>
           </div>
         </div>
       </div>
