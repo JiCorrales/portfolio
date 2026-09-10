@@ -3,40 +3,44 @@ const { useState: uSs, useEffect: uEe, useRef: uRr } = React;
 
 const WA_URL = 'https://wa.me/50687204622';
 const EMAIL = 'jocorrales.dev@gmail.com';
+const LINKEDIN = 'https://www.linkedin.com/in/jicorrales';
+const GITHUB = 'https://github.com/JiCorrales';
+
+const SocialOut = () => (
+  <>
+    <div><span className="dim">→</span> <a href={WA_URL} target="_blank" rel="noopener">whatsapp</a>   <span className="dim">+506 8720 4622</span></div>
+    <div><span className="dim">→</span> <a href={`mailto:${EMAIL}`}>email</a>      <span className="dim">{EMAIL}</span></div>
+    <div><span className="dim">→</span> <a href={LINKEDIN} target="_blank" rel="noopener">linkedin</a>   <span className="dim">@jicorrales</span></div>
+    <div><span className="dim">→</span> <a href={GITHUB} target="_blank" rel="noopener">github</a>     <span className="dim">@JiCorrales</span></div>
+  </>
+);
 
 // ============ TERMINAL CLI FOOTER ============
 function TerminalFooter() {
+  const { lang, t } = window.useLang();
+  const aboutOut = (
+    <>
+      <div><span className="k">name</span> <span className="dim">·</span> <span className="v">Jose Corrales</span></div>
+      <div><span className="k">role</span> <span className="dim">·</span> <span className="v">Software Engineer</span></div>
+      <div><span className="k">where</span> <span className="dim">·</span> <span className="v">Cartago, CR</span> <span className="dim">(UTC-6)</span></div>
+      <div><span className="k">stack</span> <span className="dim">·</span> <span className="s">TypeScript · React · Node · Postgres · Claude agents</span></div>
+      <div><span className="k">status</span> <span className="dim">·</span> <span className="hl">{t('term.status')}</span></div>
+    </>
+  );
   const initialLines = [
-    { type: 'comment', text: '// jose@cartago — escribí un comando o tocá un chip de abajo' },
+    { type: 'comment', text: t('term.hello') },
     { type: 'cmd', cmd: 'about' },
-    {
-      type: 'out', html: (
-        <>
-          <div><span className="k">name</span> <span className="dim">·</span> <span className="v">Jose Corrales</span></div>
-          <div><span className="k">role</span> <span className="dim">·</span> <span className="v">Software Engineer</span></div>
-          <div><span className="k">where</span> <span className="dim">·</span> <span className="v">Cartago, CR</span> <span className="dim">(UTC-6)</span></div>
-          <div><span className="k">stack</span> <span className="dim">·</span> <span className="s">TypeScript · React · Next.js · Node · Postgres</span></div>
-          <div><span className="k">status</span> <span className="dim">·</span> <span className="hl">available Q2 2026</span></div>
-        </>
-      )
-    },
+    { type: 'out', html: aboutOut },
     { type: 'cmd', cmd: 'social -l' },
-    {
-      type: 'out', html: (
-        <>
-          <div><span className="dim">→</span> <a href={WA_URL} target="_blank" rel="noopener">whatsapp</a>   <span className="dim">+506 8720 4622</span></div>
-          <div><span className="dim">→</span> <a href={`mailto:${EMAIL}`}>email</a>      <span className="dim">{EMAIL}</span></div>
-          <div><span className="dim">→</span> <a href="https://linkedin.com" target="_blank" rel="noopener">linkedin</a>   <span className="dim">@josecorralescr</span></div>
-          <div><span className="dim">→</span> <a href="https://github.com" target="_blank" rel="noopener">github</a>     <span className="dim">@josecorrales</span></div>
-        </>
-      )
-    },
+    { type: 'out', html: <SocialOut /> },
   ];
 
   const [lines, setLines] = uSs(initialLines);
   const [input, setInput] = uSs('');
   const inputRef = uRr(null);
   const bodyRef = uRr(null);
+
+  uEe(() => { setLines(initialLines); }, [lang]);
 
   uEe(() => {
     if (bodyRef.current) bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
@@ -57,16 +61,7 @@ function TerminalFooter() {
     const head = parts[0].toLowerCase();
 
     if (head === 'about') {
-      newLines.push({
-        type: 'out', html: (
-          <>
-            <div><span className="k">name</span> <span className="dim">·</span> <span className="v">Jose Corrales</span></div>
-            <div><span className="k">role</span> <span className="dim">·</span> <span className="v">Software Engineer</span></div>
-            <div><span className="k">where</span> <span className="dim">·</span> <span className="v">Cartago, CR</span></div>
-            <div><span className="k">status</span> <span className="dim">·</span> <span className="hl">available Q2 2026</span></div>
-          </>
-        )
-      });
+      newLines.push({ type: 'out', html: aboutOut });
     } else if (head === 'contact') {
       newLines.push({ type: 'out', html: <div><span className="dim">→</span> <span className="s">scroll: #contact</span></div> });
       setTimeout(() => scrollTo('contact'), 80);
@@ -77,39 +72,30 @@ function TerminalFooter() {
       newLines.push({ type: 'out', html: <div><span className="dim">→</span> <span className="s">scroll: #services</span></div> });
       setTimeout(() => scrollTo('services'), 80);
     } else if (head === 'social') {
-      newLines.push({
-        type: 'out', html: (
-          <>
-            <div><span className="dim">→</span> <a href={WA_URL} target="_blank" rel="noopener">whatsapp</a>   <span className="dim">+506 8720 4622</span></div>
-            <div><span className="dim">→</span> <a href={`mailto:${EMAIL}`}>email</a>      <span className="dim">{EMAIL}</span></div>
-            <div><span className="dim">→</span> <a href="https://linkedin.com" target="_blank" rel="noopener">linkedin</a>   <span className="dim">@josecorralescr</span></div>
-            <div><span className="dim">→</span> <a href="https://github.com" target="_blank" rel="noopener">github</a>     <span className="dim">@josecorrales</span></div>
-          </>
-        )
-      });
+      newLines.push({ type: 'out', html: <SocialOut /> });
     } else if (head === 'hire') {
-      newLines.push({ type: 'out', html: <div><span className="hl">→ abriendo WhatsApp…</span></div> });
-      setTimeout(() => window.open(WA_URL + '?text=' + encodeURIComponent('Hola Jose, vengo del portfolio'), '_blank'), 350);
+      newLines.push({ type: 'out', html: <div><span className="hl">{t('term.opening')}</span></div> });
+      setTimeout(() => window.open(WA_URL + '?text=' + encodeURIComponent(t('wa.fromPortfolio')), '_blank'), 350);
     } else if (head === 'help') {
       newLines.push({
         type: 'out', html: (
           <>
-            <div><span className="k">about</span>      <span className="dim">— quién soy</span></div>
-            <div><span className="k">work</span>       <span className="dim">— scroll a proyectos</span></div>
-            <div><span className="k">services</span>   <span className="dim">— scroll a servicios</span></div>
-            <div><span className="k">contact</span>    <span className="dim">— scroll a contacto</span></div>
-            <div><span className="k">social -l</span>  <span className="dim">— listado de socials</span></div>
-            <div><span className="k">hire</span>       <span className="dim">— abre WhatsApp</span></div>
-            <div><span className="k">clear</span>      <span className="dim">— limpia la terminal</span></div>
+            <div><span className="k">about</span>      <span className="dim">{t('term.h.about')}</span></div>
+            <div><span className="k">work</span>       <span className="dim">{t('term.h.work')}</span></div>
+            <div><span className="k">services</span>   <span className="dim">{t('term.h.services')}</span></div>
+            <div><span className="k">contact</span>    <span className="dim">{t('term.h.contact')}</span></div>
+            <div><span className="k">social -l</span>  <span className="dim">{t('term.h.social')}</span></div>
+            <div><span className="k">hire</span>       <span className="dim">{t('term.h.hire')}</span></div>
+            <div><span className="k">clear</span>      <span className="dim">{t('term.h.clear')}</span></div>
           </>
         )
       });
     } else if (head === 'clear') {
-      setLines([{ type: 'comment', text: '// cleared · escribí `help` para ver comandos' }]);
+      setLines([{ type: 'comment', text: t('term.cleared') }]);
       setInput('');
       return;
     } else {
-      newLines.push({ type: 'out', html: <div><span className="n">error</span> <span className="dim">—</span> comando no encontrado: <span className="v">{cmd}</span>. probá <span className="s">help</span>.</div> });
+      newLines.push({ type: 'out', html: <div><span className="n">error</span> <span className="dim">—</span> {t('term.notFound')} <span className="v">{cmd}</span>. {t('term.try')} <span className="s">help</span>.</div> });
     }
 
     setLines(newLines);
@@ -169,7 +155,7 @@ function TerminalFooter() {
           </div>
 
           <div className="term-suggest">
-            <span className="lbl">try</span>
+            <span className="lbl">{t('term.try')}</span>
             {['about', 'work', 'services', 'contact', 'social -l', 'hire', 'help'].map(c => (
               <button key={c} className="term-chip" onClick={() => run(c)} data-hover>{c}</button>
             ))}
@@ -194,6 +180,7 @@ function TerminalFooter() {
 
 // ============ MANIFESTO / CODE FOOTER ============
 function ManifestoFooter() {
+  const { t } = window.useLang();
   const [exec, setExec] = uSs(false);
   const [running, setRunning] = uSs(false);
   const hireRef = uRr(null);
@@ -209,7 +196,7 @@ function ManifestoFooter() {
       hireRef.current.classList.add('running');
     }
     setTimeout(() => {
-      window.open(WA_URL + '?text=' + encodeURIComponent('Hola Jose, vengo del portfolio'), '_blank');
+      window.open(WA_URL + '?text=' + encodeURIComponent(t('wa.fromPortfolio')), '_blank');
       setRunning(false);
     }, 650);
   };
@@ -219,7 +206,7 @@ function ManifestoFooter() {
 
   // Build code content as array of line nodes so gutter matches
   const lines = [
-    <><K c="com">// jose.corrales — manifesto.js</K></>,
+    <><K c="com">{t('mani.comment')}</K></>,
     <><K c="kw">const</K> <K c="var">jose</K> <K c="pun">=</K> <K c="pun">{'{'}</K></>,
     <>  <K c="key">name</K><K c="pun">:</K> <K c="str">"Jose Corrales"</K><K c="pun">,</K></>,
     <>  <K c="key">role</K><K c="pun">:</K> <K c="str">"Software Engineer"</K><K c="pun">,</K></>,
@@ -228,14 +215,14 @@ function ManifestoFooter() {
     <>  <K c="key">social</K><K c="pun">:</K> <K c="pun">{'{'}</K></>,
     <>    <K c="key">whatsapp</K><K c="pun">:</K> <a className="link-str" href={WA_URL} target="_blank" rel="noopener" data-hover>"wa.me/50687204622"</a><K c="pun">,</K></>,
     <>    <K c="key">email</K><K c="pun">:</K>    <a className="link-str" href={`mailto:${EMAIL}`} data-hover>"jocorrales.dev@gmail.com"</a><K c="pun">,</K></>,
-    <>    <K c="key">linkedin</K><K c="pun">:</K> <a className="link-str" href="https://linkedin.com" target="_blank" rel="noopener" data-hover>"@jicorrales"</a><K c="pun">,</K></>,
-    <>    <K c="key">github</K><K c="pun">:</K>   <a className="link-str" href="https://github.com" target="_blank" rel="noopener" data-hover>"@JiCorrales"</a><K c="pun">,</K></>,
+    <>    <K c="key">linkedin</K><K c="pun">:</K> <a className="link-str" href={LINKEDIN} target="_blank" rel="noopener" data-hover>"@jicorrales"</a><K c="pun">,</K></>,
+    <>    <K c="key">github</K><K c="pun">:</K>   <a className="link-str" href={GITHUB} target="_blank" rel="noopener" data-hover>"@JiCorrales"</a><K c="pun">,</K></>,
     <>  <K c="pun">{'}'}</K><K c="pun">,</K></>,
-    <>  <K c="key">believes</K><K c="pun">:</K> <K c="str">"cada detalle importa — pero solo si se siente"</K><K c="pun">,</K></>,
+    <>  <K c="key">believes</K><K c="pun">:</K> <K c="str">{t('mani.believes')}</K><K c="pun">,</K></>,
     <>  <K c="fn">hire</K><K c="pun">:</K> <K c="pun">()</K> <K c="kw">{'=>'}</K> <K c="kw">window</K><K c="pun">.</K><K c="fn">open</K><K c="pun">(</K><K c="str">"wa.me/50687204622"</K><K c="pun">)</K><K c="pun">,</K></>,
     <><K c="pun">{'}'}</K><K c="pun">;</K></>,
     <>{'\u00A0'}</>,
-    <><K c="com">// ↓ ejecutá para contratar</K></>,
+    <><K c="com">{t('mani.exec')}</K></>,
     <><K c="var">jose</K><K c="pun">.</K><button ref={hireRef} className="hire" onClick={runHire} data-hover><K c="fn">hire</K><K c="pun">()</K></button><K c="pun">;</K></>,
   ];
 
@@ -266,7 +253,7 @@ function ManifestoFooter() {
           <span>CARTAGO · CR</span>
           <span>{hh}:{mm} UTC-6</span>
         </div>
-        <div>BUILT BY HAND · NO TEMPLATES</div>
+        <div>{t('mani.built')}</div>
       </div>
     </div>
   );

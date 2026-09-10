@@ -2,6 +2,7 @@
 const { useState: uS, useEffect: uE } = React;
 
 function Tweaks({ state, setState }) {
+  const { t } = window.useLang();
   const [open, setOpen] = uS(false);
   const [editModeOn, setEditModeOn] = uS(false);
 
@@ -38,7 +39,7 @@ function Tweaks({ state, setState }) {
         </h5>
 
         <div className="group">
-          <div className="group-label">Acento</div>
+          <div className="group-label">{t('tw.accent')}</div>
           <div className="opts">
             <Opt k="accent" v="lime" label="Lime" />
             <Opt k="accent" v="amber" label="Amber" />
@@ -48,7 +49,7 @@ function Tweaks({ state, setState }) {
         </div>
 
         <div className="group">
-          <div className="group-label">Footer</div>
+          <div className="group-label">{t('tw.footer')}</div>
           <div className="opts">
             <Opt k="footer" v="manifesto" label="Manifesto" />
             <Opt k="footer" v="terminal" label="Terminal" />
@@ -57,11 +58,11 @@ function Tweaks({ state, setState }) {
 
         <div className="group">
           <div className="row">
-            <span>Sonido transport</span>
+            <span>{t('tw.sound')}</span>
             <div className={`toggle ${state.sound ? 'on' : ''}`} onClick={() => update('sound', !state.sound)}></div>
           </div>
           <div className="row">
-            <span>Cursor personalizado</span>
+            <span>{t('tw.cursor')}</span>
             <div className={`toggle ${state.cursor ? 'on' : ''}`} onClick={() => update('cursor', !state.cursor)}></div>
           </div>
         </div>
@@ -81,6 +82,14 @@ function App() {
     } catch {}
     return DEFAULTS;
   });
+
+  const [lang, setLang] = uS(window.readLang);
+  uE(() => {
+    document.documentElement.lang = lang;
+    document.title = window.I18N[lang]['meta.title'];
+    try { localStorage.setItem('jc-lang', lang); } catch {}
+  }, [lang]);
+  const tt = (k) => window.I18N[lang][k];
 
   uE(() => {
     document.body.dataset.accent = state.accent || 'lime';
@@ -167,8 +176,10 @@ function App() {
     window.scrollTo({ top: y, behavior: 'smooth' });
   };
 
+  const toggleLang = () => setLang(l => (l === 'en' ? 'es' : 'en'));
+
   return (
-    <>
+    <window.LangCtx.Provider value={lang}>
       {state.cursor && (
         <>
           <div id="c-dot" className="cursor-dot"></div>
@@ -176,14 +187,21 @@ function App() {
         </>
       )}
       {isProjectPage ? (
-        <window.ProjectPaaTec />
+        <>
+          <nav className="topnav" data-hover>
+            <a onClick={() => { window.location.hash = '#work'; }}>{tt('nav.work')}</a>
+            <a className="lang" onClick={toggleLang} title={tt('lang.switchTitle')}>{tt('lang.switch')}</a>
+          </nav>
+          <window.ProjectPaaTec />
+        </>
       ) : (
         <>
           <nav className="topnav" data-hover>
-            <a className={active === 'top' ? 'active' : ''} onClick={() => jump('top')}>Home</a>
-            <a className={active === 'work' ? 'active' : ''} onClick={() => jump('work')}>Work</a>
-            <a className={active === 'services' ? 'active' : ''} onClick={() => jump('services')}>Services</a>
-            <a className={active === 'contact' ? 'active' : ''} onClick={() => jump('contact')}>Contact</a>
+            <a className={active === 'top' ? 'active' : ''} onClick={() => jump('top')}>{tt('nav.home')}</a>
+            <a className={active === 'work' ? 'active' : ''} onClick={() => jump('work')}>{tt('nav.work')}</a>
+            <a className={active === 'services' ? 'active' : ''} onClick={() => jump('services')}>{tt('nav.services')}</a>
+            <a className={active === 'contact' ? 'active' : ''} onClick={() => jump('contact')}>{tt('nav.contact')}</a>
+            <a className="lang" onClick={toggleLang} title={tt('lang.switchTitle')}>{tt('lang.switch')}</a>
           </nav>
 
           <window.Hero />
@@ -191,6 +209,7 @@ function App() {
           <window.Work />
           <window.Services />
           <window.Now />
+          <window.About />
           <window.Contact />
           <window.ConsoleFooter variant={state.footer || 'manifesto'} />
         </>
@@ -198,7 +217,7 @@ function App() {
 
       <Tweaks state={state} setState={setState} />
       <window.Lightbox />
-    </>
+    </window.LangCtx.Provider>
   );
 }
 
