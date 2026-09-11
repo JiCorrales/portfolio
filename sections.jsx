@@ -142,7 +142,6 @@ const PROJECTS = [
   {
     num: '05', name: { en: 'FacturAI', es: 'FacturAI' }, tag: { en: 'Own product · Restaurants', es: 'Producto propio · Restaurantes' }, year: '2026',
     tech: ['Astro', 'React (islands)', 'Express 5', 'TypeScript', 'Drizzle ORM', 'PostgreSQL', 'Anthropic (Claude)'],
-    link: 'https://facturai-prototipo.vercel.app',
     desc: {
       en: 'Billing and POS software for restaurants with an AI advisor that flags expiring inventory, purchase timing and financial patterns, plus automated supplier purchase coordination over WhatsApp. MVP deployed across two client apps (desktop POS/admin + mobile PWA for waitstaff), 23 screens.',
       es: 'Software de facturación y caja para restaurantes con un asesor IA que detecta vencimientos, momentos de compra y patrones financieros, más coordinación automática de compras con proveedores por WhatsApp. MVP desplegado en dos apps cliente (caja/admin desktop + PWA móvil para meseros), 23 pantallas.',
